@@ -1,0 +1,115 @@
+<app-nav></app-nav>
+
+<!-- Surreys -->
+<div class="form-control">
+    <button class="btn btn-primary" (click)="newSurveyFunction(true)">New survey</button>
+
+    <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Number of questions</th>
+            <th scope="col">Created</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of listCatalogSurveys">
+            <td scope="row">{{x.name}}</td>
+            <td scope="row">{{x.questions}}</td>
+            <td scope="row">{{x.created | date:'MM/dd/yyyy h:mm a'}}</td>
+            <td scope="row">
+                <button class="btn btn-info" (click)="AddQuestion(x.id, true)">Add question</button>
+                <button class="btn btn-info margin-left-10px" (click)="ShowQuestions(x.id, true)">Show questions</button>
+                <button class="btn btn-danger margin-left-10px" (click)="deleteSurvey(x.id)">Delete</button>
+            </td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
+</div>
+
+<!-- New survey -->
+<div class="form-control needs-validation novalidate" *ngIf="newSurvey">
+    <span>New survey:</span>
+    
+    <div class="mb-3">
+        <label class="form-label">Survey</label>
+        <input type="text" class="form-control"  placeholder="Test" [(ngModel)]="newSurveyName" required>
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-primary" (click)="saveNewSurvey()">Save</button>
+        <button class="btn btn-secondary margin-left-10px" (click)="newSurveyFunction(false)">Cancel</button>
+    </div>
+    
+</div>
+
+<!-- New question -->
+<div class="form-control needs-validation novalidate" *ngIf="newQuestion">
+    
+    <div class="mb-3">
+        <label class="form-label">Question</label>
+        <input type="text" class="form-control"  placeholder="Test" [(ngModel)]="newQuestionName" required>
+    </div>
+
+    <div class="mb-3">
+        <button class="btn btn-primary" (click)="saveAddQuestion()">Save</button>
+        <button class="btn btn-secondary margin-left-10px" (click)="AddQuestion(0, false)">Cancel</button>
+    </div>
+    
+</div>
+
+<!-- Survey questions -->
+<div class="form-control" *ngIf="showQuestion &&  listQuestion.length>0">
+    <span>Survey questions:</span><br>
+    <button class="btn btn-primary" (click)="ShowQuestions(0, false)">Hide</button>
+    
+    <table class="table table-striped table-hover">
+        <thead>
+          <tr>
+            <th scope="col">Question</th>
+            <th scope="col">Answers</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let x of listQuestion">
+            <td scope="row">{{x.name}} {{x.id}} {{showQuestionsSelectedId}}</td>
+            <td scope="row">
+                <span *ngFor="let y of x.questionAnswer">{{y.name}} : {{y.isCorrect}} 
+                    <button class="btn btn-danger" (click)="deleteQuestionAnswer(y.id)">Delete</button><br> 
+                </span>
+            </td>
+            <td>
+                <button class="btn btn-info" (click)="openNewQuestionAnswer(x.id, true)">New Answer</button><br> 
+                <button class="btn btn-danger" (click)="deleteCatalogSurveyQuestion(x.id)">Delete</button><br> 
+            </td>
+          </tr>
+          <tr>
+        </tbody>
+      </table>
+</div>
+
+<!-- New answer -->
+<div class="form-control" *ngIf="newQuestionAnswerForm">
+    <span>New answer:</span>
+
+    <input class="form-control" type="text" placeholder="Answer" [(ngModel)]="newQuestionAnswerName" required>
+    
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="1" [(ngModel)]="newQuestionAnswer">
+        <label class="form-check-label" for="inlineRadio1">YES</label>
+    </div>
+
+    <div class="form-check form-check-inline">
+        <input class="form-check-input" type="radio" value="0" [(ngModel)]="newQuestionAnswer">
+        <label class="form-check-label" for="inlineRadio2">NO</label>
+    </div>
+    
+    <div>
+        <button class="btn btn-primary" (click)="saveQuestionAnswer()">Save</button>
+        <button class="btn btn-primary margin-left-10px" (click)="openNewQuestionAnswer(0, false)">Cancel</button>
+    </div>
+    
+</div>
