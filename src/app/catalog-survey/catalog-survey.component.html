@@ -9,6 +9,7 @@
           <tr>
             <th scope="col">Name</th>
             <th scope="col">Number of questions</th>
+            <th scope="col">Number of users</th>
             <th scope="col">Created</th>
             <th scope="col">Actions</th>
           </tr>
@@ -17,11 +18,13 @@
           <tr *ngFor="let x of listCatalogSurveys">
             <td scope="row">{{x.name}}</td>
             <td scope="row">{{x.questions}}</td>
+            <td scope="row">{{x.users}}</td>
             <td scope="row">{{x.created | date:'MM/dd/yyyy h:mm a'}}</td>
             <td scope="row">
                 <button class="btn btn-info" (click)="AddQuestion(x.id, true)">Add question</button>
                 <button class="btn btn-info margin-left-10px" (click)="ShowQuestions(x.id, true)">Show questions</button>
-                <button class="btn btn-danger margin-left-10px" (click)="deleteSurvey(x.id)">Delete</button>
+                <button class="btn btn-info margin-left-10px" (click)="newUserAnswer(x.id, true)">New user</button>
+                <button *ngIf="x.users===0" class="btn btn-danger margin-left-10px" (click)="deleteSurvey(x.id)">Delete</button>
             </td>
           </tr>
           <tr>
@@ -112,4 +115,19 @@
         <button class="btn btn-primary margin-left-10px" (click)="openNewQuestionAnswer(0, false)">Cancel</button>
     </div>
     
+</div>
+
+<!-- New user -->
+<div class="form-control needs-validation novalidate" *ngIf="newUser">
+    
+  <div class="mb-3">
+      <label class="form-label">E-mail</label>
+      <input type="email" class="form-control"  placeholder="example@example.com" [(ngModel)]="newUserEmail" required>
+  </div>
+
+  <div class="mb-3">
+      <button class="btn btn-primary" (click)="saveUser()">Save</button>
+      <button class="btn btn-secondary margin-left-10px" (click)="newUserAnswer(0, false)">Cancel</button>
+  </div>
+  
 </div>

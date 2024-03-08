@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { QuestionService } from '../Services/question.service';
 import { CatalogSurveyQuestionService } from '../Services/catalog-survey-question.service';
 import { QuestionAnswerService } from '../Services/question-answer.service';
+import { UserCatalogSurveryService } from '../Services/user-catalog-survery.service';
 
 
 @Component({
@@ -36,11 +37,16 @@ export class CatalogSurveyComponent {
   newQuestionAnswerName:string= "";
   newQuestionAnswer: boolean = true;
 
+  newUser: boolean = false;
+  newUserCatalogSurveyId: number = 0;
+  newUserEmail: string= "";
+
   constructor(
     private serviceCatalogSurvey: CatalogSurveyService, 
     private serviceQuestion: QuestionService, 
     private serviceQuestionAnswerService: QuestionAnswerService, 
-    private serviceCatalogSurveyQuestionService: CatalogSurveyQuestionService) {
+    private serviceCatalogSurveyQuestionService: CatalogSurveyQuestionService,
+    private serviceuserCatalogSurveryService: UserCatalogSurveryService) {
     this.loadData();
   }
   loadData(){
@@ -86,6 +92,25 @@ export class CatalogSurveyComponent {
     setTimeout(() => {
       // Your code to execute after x seconds
       this.newSurveyFunction(false);
+      this.loadData();
+    }, 50);
+  }
+  newUserAnswer(id: number, show: boolean) {
+    this.newUserCatalogSurveyId = id;
+    this.newUser = show;
+  }
+  saveUser(){
+    this.serviceuserCatalogSurveryService.post(this.newUserEmail, this.newUserCatalogSurveyId).subscribe(data=>
+      (data: any) => {
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+    
+    setTimeout(() => {
+      // Your code to execute after x seconds
+      this.newUserAnswer(0, false);
       this.loadData();
     }, 50);
   }

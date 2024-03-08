@@ -3,4 +3,5 @@ export interface CatalogSurvey {
     name: string;
     created: Date;
     questions: number;
+    users: number;
 }
