@@ -24,6 +24,7 @@
                 <button class="btn btn-info" (click)="AddQuestion(x.id, true)">Add question</button>
                 <button class="btn btn-info margin-left-10px" (click)="ShowQuestions(x.id, true)">Show questions</button>
                 <button class="btn btn-info margin-left-10px" (click)="newUserAnswer(x.id, true)">New user</button>
+                <button class="btn btn-info margin-left-10px" (click)="showUser(x.id, true)">Show users</button>
                 <button *ngIf="x.users===0" class="btn btn-danger margin-left-10px" (click)="deleteSurvey(x.id)">Delete</button>
             </td>
           </tr>
@@ -130,4 +131,53 @@
       <button class="btn btn-secondary margin-left-10px" (click)="newUserAnswer(0, false)">Cancel</button>
   </div>
   
+</div>
+
+<!-- Show users -->
+<div class="form-control needs-validation novalidate" *ngIf="showUsers">
+  <span>Survey users:</span><br>
+    <button class="btn btn-primary" (click)="showUser(0, false)">Hide</button>
+
+  <table class="table table-striped table-hover" *ngIf="listUsers.length>0">
+    <thead>
+      <tr>
+        <th scope="col">E-mail</th>
+        <th scope="col">Result answer</th>
+        <th scope="col">Success rate</th>
+        <th scope="col">Survey finished</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of listUsers">
+        <td scope="row">{{x.email}}</td>
+        <td scope="row">Successful: {{x.successfulAnswers}} Wrong: {{x.wrongAnswers}}</td>
+        <td scope="row">{{(x.successfulAnswers/(x.successfulAnswers+x.wrongAnswers))*100}}%</td>
+        <td scope="row">{{x.finished}}</td>
+        <td scope="row">
+            <button *ngIf="!x.finished" class="btn btn-danger" (click)="deleteUserCatalogSurvery(x.id)">Delete</button>
+            <button *ngIf="x.finished" class="btn btn-info" (click)="userShowAnswers(x.email)">Show answers</button>
+        </td>
+      </tr>
+      <tr>
+    </tbody>
+  </table>
+
+  <div *ngFor="let x of listUsers">
+    <span *ngIf="x.email===showUserAnswersForUserId">
+      <span>E-mail: {{x.email}}</span>
+    <div *ngFor="let x2 of x.userQuestionAnswerVM">
+      <br>
+      <div class="card" style="width: auto">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item">Question: {{x2.questionName}}</li>
+          <li [ngClass]="{'backgroundGreen': x3.isCorrect ? 'true':'false'===x3.userAnswer, 'backgroundRed': x3.isCorrect ? 'true':'false'!==x3.userAnswer}" class="list-group-item" *ngFor="let x3 of x2.questionAnswerUserVM">
+            {{x3.name}} ({{x3.isCorrect}}):  User reply: {{ x3.userAnswer ? x3.userAnswer : 'There is no answer.' }}
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+    </span>
+  </div>
 </div>
