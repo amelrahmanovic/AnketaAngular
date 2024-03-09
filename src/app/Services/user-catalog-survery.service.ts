@@ -15,4 +15,11 @@ export class UserCatalogSurveryService {
     };
     return this.http.post(this.uri, QuestionNewVM);
   }
+  get(id: number) 
+  {
+    return this.http.get(`${this.uri}`+'/'+id);
+  }
+  delete(userId: number, catalogSurveyId: number){
+    return this.http.delete(`${this.uri}`+'/'+userId+'?catalogSurveyId='+catalogSurveyId);
+  }
 }

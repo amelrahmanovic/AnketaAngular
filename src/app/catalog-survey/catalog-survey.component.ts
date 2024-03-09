@@ -9,6 +9,7 @@ import { QuestionService } from '../Services/question.service';
 import { CatalogSurveyQuestionService } from '../Services/catalog-survey-question.service';
 import { QuestionAnswerService } from '../Services/question-answer.service';
 import { UserCatalogSurveryService } from '../Services/user-catalog-survery.service';
+import { UsersQuestionsAnwers } from '../Models/UsersQuestionsAnwers';
 
 
 @Component({
@@ -40,6 +41,11 @@ export class CatalogSurveyComponent {
   newUser: boolean = false;
   newUserCatalogSurveyId: number = 0;
   newUserEmail: string= "";
+
+  showUsers: boolean = false;
+  showUsersCatalogSurveyId: number = 0;
+  listUsers: UsersQuestionsAnwers[] = [];
+  showUserAnswersForUserId: string = "";
 
   constructor(
     private serviceCatalogSurvey: CatalogSurveyService, 
@@ -209,5 +215,45 @@ export class CatalogSurveyComponent {
     this.newQuestionAnswerName = "";
     this.newQuestionAnswer = true;
     this.showQuestion=false;
+  }
+
+  showUser(id: number, show: boolean){
+    this.showUsers=show;
+    this.showUsersCatalogSurveyId=id;
+
+    this.serviceuserCatalogSurveryService.get(id).subscribe(
+      (data: any) => {
+        this.listUsers = data;
+        console.log(data);
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+  }
+  deleteUserCatalogSurvery(id: number){
+    this.serviceuserCatalogSurveryService.delete(id, this.showUsersCatalogSurveyId).subscribe(
+      (data: any) => {
+      },
+      (error) => {
+        console.log(error);
+      }
+    )
+
+    setTimeout(() => {
+      // Your code to execute after x seconds
+      this.serviceuserCatalogSurveryService.get(id).subscribe(
+        (data: any) => {
+          this.listUsers = data;
+        },
+        (error) => {
+          console.log(error);
+        }
+      )//duplicated
+
+    }, 50);
+  }
+  userShowAnswers(id: string){
+    this.showUserAnswersForUserId=id;
   }
 }
