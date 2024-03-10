@@ -224,7 +224,6 @@ export class CatalogSurveyComponent {
     this.serviceuserCatalogSurveryService.get(id).subscribe(
       (data: any) => {
         this.listUsers = data;
-        console.log(data);
       },
       (error) => {
         console.log(error);
