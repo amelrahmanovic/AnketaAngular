@@ -10,7 +10,7 @@ import { CatalogSurveyQuestionService } from '../Services/catalog-survey-questio
 import { QuestionAnswerService } from '../Services/question-answer.service';
 import { UserCatalogSurveryService } from '../Services/user-catalog-survery.service';
 import { UsersQuestionsAnwers } from '../Models/UsersQuestionsAnwers';
-import { ToastrService, ToastNoAnimation, ToastrModule } from 'ngx-toastr';
+import { ToastrService, ToastrModule, IndividualConfig } from 'ngx-toastr';
 
 
 @Component({
@@ -21,6 +21,13 @@ import { ToastrService, ToastNoAnimation, ToastrModule } from 'ngx-toastr';
     imports: [NavComponent, CommonModule, FormsModule, ToastrModule]
 })
 export class CatalogSurveyComponent {
+  toastOptions: Partial<IndividualConfig> = {
+    progressBar: true,
+    timeOut: 2000
+  };
+  
+  waitTime: number = 100;
+
   listCatalogSurveys: CatalogSurvey[] = [];
 
   newSurvey: boolean = false;
@@ -58,7 +65,7 @@ export class CatalogSurveyComponent {
     this.loadData();
 
     // // EXAMPLE
-    // this.toastr.success('Uspješno!', 'Success');
+    // this.toastr.success('Uspješno!', 'Success', this.toastOptions);
     // this.toastr.error('Uspješno!', 'Success');
     // this.toastr.info('Uspješno!', 'Success');
     // this.toastr.warning('Uspješno!', 'Success');
@@ -69,7 +76,7 @@ export class CatalogSurveyComponent {
         this.listCatalogSurveys = data;
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
   }
@@ -84,7 +91,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
     
@@ -92,22 +99,24 @@ export class CatalogSurveyComponent {
       // Your code to execute after x seconds
       this.newSurveyFunction(false);
       this.loadData();
-    }, 50);
+    }, this.waitTime);
     
   }
   deleteSurvey(id: number){
-    this.serviceCatalogSurvey.delete(id).subscribe(data=>
-      (data: any) => {},
-      (error) => {
-        this.toastr.error('Error:'+error, 'Error');
-      }
-    )
 
-    setTimeout(() => {
-      // Your code to execute after x seconds
-      this.newSurveyFunction(false);
-      this.loadData();
-    }, 50);
+    
+    // this.serviceCatalogSurvey.delete(id).subscribe(data=>
+    //   (data: any) => {},
+    //   (error) => {
+    //     this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+    //   }
+    // )
+
+    // setTimeout(() => {
+    //   // Your code to execute after x seconds
+    //   this.newSurveyFunction(false);
+    //   this.loadData();
+    // }, this.waitTime);
   }
   newUserAnswer(id: number, show: boolean) {
     this.newUserCatalogSurveyId = id;
@@ -118,7 +127,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
     
@@ -126,7 +135,7 @@ export class CatalogSurveyComponent {
       // Your code to execute after x seconds
       this.newUserAnswer(0, false);
       this.loadData();
-    }, 50);
+    }, this.waitTime);
   }
 
   AddQuestion(id: number, show: boolean){
@@ -139,7 +148,7 @@ export class CatalogSurveyComponent {
     this.serviceQuestion.post(this.newQuestionSurveySelectedId, this.newQuestionName).subscribe(data=>
       (data: any) => {},
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
 
@@ -147,7 +156,7 @@ export class CatalogSurveyComponent {
       // Your code to execute after x seconds
       this.AddQuestion(0, false);
       this.loadData();
-    }, 50);
+    }, this.waitTime);
   }
 
 
@@ -161,7 +170,7 @@ export class CatalogSurveyComponent {
         this.listQuestion = data;
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
 
@@ -170,7 +179,7 @@ export class CatalogSurveyComponent {
     this.serviceQuestionAnswerService.delete(id).subscribe(data=>
       (data: any) => {},
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
 
@@ -180,13 +189,13 @@ export class CatalogSurveyComponent {
       this.showQuestionsSelectedId=0;
       this.showQuestion=false;
       this.listQuestion = [];
-    }, 50);
+    }, this.waitTime);
   }
   deleteCatalogSurveyQuestion(id: number){
     this.serviceCatalogSurveyQuestionService.delete(id, this.showQuestionsSelectedId).subscribe(data=>
       (data: any) => {},
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
     this.showQuestion=false;
@@ -202,7 +211,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
     
@@ -213,10 +222,10 @@ export class CatalogSurveyComponent {
           this.listQuestion = data;
         },
         (error) => {
-          this.toastr.error('Error:'+error, 'Error');
+          this.toastr.error('Error:'+error, 'Error', this.toastOptions);
         }
       )
-    }, 50);
+    }, this.waitTime);
 
     this.newQuestionAnswerForm = false;
     this.newQuestionAnswerQuestionId = 0;
@@ -234,7 +243,7 @@ export class CatalogSurveyComponent {
         this.listUsers = data;
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
   }
@@ -243,7 +252,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error');
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
       }
     )
 
@@ -254,11 +263,11 @@ export class CatalogSurveyComponent {
           this.listUsers = data;
         },
         (error) => {
-          this.toastr.error('Error:'+error, 'Error');
+          this.toastr.error('Error:'+error, 'Error', this.toastOptions);
         }
       )//duplicated
 
-    }, 50);
+    }, this.waitTime);
   }
   userShowAnswers(id: string){
     this.showUserAnswersForUserId=id;
