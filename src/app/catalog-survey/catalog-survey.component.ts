@@ -10,6 +10,7 @@ import { CatalogSurveyQuestionService } from '../Services/catalog-survey-questio
 import { QuestionAnswerService } from '../Services/question-answer.service';
 import { UserCatalogSurveryService } from '../Services/user-catalog-survery.service';
 import { UsersQuestionsAnwers } from '../Models/UsersQuestionsAnwers';
+import { ToastrService, ToastNoAnimation, ToastrModule } from 'ngx-toastr';
 
 
 @Component({
@@ -17,7 +18,7 @@ import { UsersQuestionsAnwers } from '../Models/UsersQuestionsAnwers';
     standalone: true,
     templateUrl: './catalog-survey.component.html',
     styleUrl: './catalog-survey.component.css',
-    imports: [NavComponent, CommonModule, FormsModule]
+    imports: [NavComponent, CommonModule, FormsModule, ToastrModule]
 })
 export class CatalogSurveyComponent {
   listCatalogSurveys: CatalogSurvey[] = [];
@@ -52,8 +53,15 @@ export class CatalogSurveyComponent {
     private serviceQuestion: QuestionService, 
     private serviceQuestionAnswerService: QuestionAnswerService, 
     private serviceCatalogSurveyQuestionService: CatalogSurveyQuestionService,
-    private serviceuserCatalogSurveryService: UserCatalogSurveryService) {
+    private serviceuserCatalogSurveryService: UserCatalogSurveryService,
+    private toastr: ToastrService) {
     this.loadData();
+
+    // // EXAMPLE
+    // this.toastr.success('Uspješno!', 'Success');
+    // this.toastr.error('Uspješno!', 'Success');
+    // this.toastr.info('Uspješno!', 'Success');
+    // this.toastr.warning('Uspješno!', 'Success');
   }
   loadData(){
     this.serviceCatalogSurvey.get().subscribe(
@@ -61,7 +69,7 @@ export class CatalogSurveyComponent {
         this.listCatalogSurveys = data;
       },
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
   }
@@ -76,7 +84,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
     
@@ -91,7 +99,7 @@ export class CatalogSurveyComponent {
     this.serviceCatalogSurvey.delete(id).subscribe(data=>
       (data: any) => {},
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
 
@@ -110,7 +118,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
     
@@ -131,7 +139,7 @@ export class CatalogSurveyComponent {
     this.serviceQuestion.post(this.newQuestionSurveySelectedId, this.newQuestionName).subscribe(data=>
       (data: any) => {},
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
 
@@ -153,7 +161,7 @@ export class CatalogSurveyComponent {
         this.listQuestion = data;
       },
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
 
@@ -162,7 +170,7 @@ export class CatalogSurveyComponent {
     this.serviceQuestionAnswerService.delete(id).subscribe(data=>
       (data: any) => {},
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
 
@@ -178,7 +186,7 @@ export class CatalogSurveyComponent {
     this.serviceCatalogSurveyQuestionService.delete(id, this.showQuestionsSelectedId).subscribe(data=>
       (data: any) => {},
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
     this.showQuestion=false;
@@ -194,7 +202,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
     
@@ -205,7 +213,7 @@ export class CatalogSurveyComponent {
           this.listQuestion = data;
         },
         (error) => {
-          console.log(error);
+          this.toastr.error('Error:'+error, 'Error');
         }
       )
     }, 50);
@@ -226,7 +234,7 @@ export class CatalogSurveyComponent {
         this.listUsers = data;
       },
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
   }
@@ -235,7 +243,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        console.log(error);
+        this.toastr.error('Error:'+error, 'Error');
       }
     )
 
@@ -246,7 +254,7 @@ export class CatalogSurveyComponent {
           this.listUsers = data;
         },
         (error) => {
-          console.log(error);
+          this.toastr.error('Error:'+error, 'Error');
         }
       )//duplicated
 
