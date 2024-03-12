@@ -21,12 +21,15 @@ import { ToastrService, ToastrModule, IndividualConfig } from 'ngx-toastr';
     imports: [NavComponent, CommonModule, FormsModule, ToastrModule]
 })
 export class CatalogSurveyComponent {
+booleanConvert(arg0: string) {
+  return Boolean(arg0);
+}
   toastOptions: Partial<IndividualConfig> = {
     progressBar: true,
     timeOut: 2000
   };
   
-  waitTime: number = 100;
+  waitTime: number = 200;
 
   listCatalogSurveys: CatalogSurvey[] = [];
 
@@ -103,20 +106,18 @@ export class CatalogSurveyComponent {
     
   }
   deleteSurvey(id: number){
+    this.serviceCatalogSurvey.delete(id).subscribe(data=>
+      (data: any) => {},
+      (error) => {
+        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+      }
+    )
 
-    
-    // this.serviceCatalogSurvey.delete(id).subscribe(data=>
-    //   (data: any) => {},
-    //   (error) => {
-    //     this.toastr.error('Error:'+error, 'Error', this.toastOptions);
-    //   }
-    // )
-
-    // setTimeout(() => {
-    //   // Your code to execute after x seconds
-    //   this.newSurveyFunction(false);
-    //   this.loadData();
-    // }, this.waitTime);
+    setTimeout(() => {
+      // Your code to execute after x seconds
+      this.newSurveyFunction(false);
+      this.loadData();
+    }, this.waitTime);
   }
   newUserAnswer(id: number, show: boolean) {
     this.newUserCatalogSurveyId = id;
