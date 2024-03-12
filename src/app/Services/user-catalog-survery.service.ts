@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Test } from '../Models/Test';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,15 @@ export class UserCatalogSurveryService {
   {
     return this.http.get(`${this.uri}`+'/'+id);
   }
+  getTersts(id: number) 
+  {
+    return this.http.get(`${this.uri}`+'/user/'+id);
+  }
   delete(userId: number, catalogSurveyId: number){
     return this.http.delete(`${this.uri}`+'/'+userId+'?catalogSurveyId='+catalogSurveyId);
+  }
+  postUserQuestions(tests: Test[])
+  {
+    return this.http.post(this.uri+'/user', tests);
   }
 }
