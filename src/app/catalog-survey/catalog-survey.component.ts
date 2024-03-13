@@ -12,18 +12,53 @@ import { UserCatalogSurveryService } from '../Services/user-catalog-survery.serv
 import { UsersQuestionsAnwers } from '../Models/UsersQuestionsAnwers';
 import { ToastrService, ToastrModule, IndividualConfig } from 'ngx-toastr';
 
+import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
+import { ColDef } from 'ag-grid-community'; // Column Definition Type Interface
+import 'ag-grid-community/styles/ag-grid.css';
+import 'ag-grid-community/styles/ag-theme-quartz.css';
+
 
 @Component({
     selector: 'app-catalog-survey',
     standalone: true,
     templateUrl: './catalog-survey.component.html',
     styleUrl: './catalog-survey.component.css',
-    imports: [NavComponent, CommonModule, FormsModule, ToastrModule]
+    imports: [NavComponent, CommonModule, FormsModule, ToastrModule, AgGridAngular]
 })
 export class CatalogSurveyComponent {
-booleanConvert(arg0: string) {
-  return Boolean(arg0);
-}
+  // Row Data: The data to be displayed.
+  // rowData = [
+  //   { id: "1", name: "Test 1", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
+  //   { id: "2", name: "Test 2", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
+  //   { id: "3", name: "Test 3", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
+  //   { id: "4", name: "Test 4", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
+  //   { id: "5", name: "Test 5", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
+  //   { id: "6", name: "Test 6", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
+  //   { id: "7", name: "Test 7", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
+  //   { id: "8", name: "Test 8", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
+  //   { id: "9", name: "Test 9", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
+  //   { id: "10", name: "Test 10", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
+  //   { id: "11", name: "Test 11", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
+  //   { id: "12", name: "Test 12", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
+  // ];
+
+  // Column Definitions: Defines the columns to be displayed.
+  colDefs: ColDef[] = [
+    { headerName: "ID", field: "id", filter: true},
+    { headerName: "Test", field: "name", filter: true },
+    { headerName: "Created", field: "created", filter: true },
+    { headerName: "Questions", field: "questions", filter: true },
+    { headerName: "Users", field: "users", filter: true },
+  ];
+  
+  pagination:boolean = true;
+  paginationPageSize:number = 500;
+  paginationPageSizeSelector = [5, 10, 100];
+  filter:boolean = true;
+
+  booleanConvert(arg0: string) {
+    return Boolean(arg0);
+  }
   toastOptions: Partial<IndividualConfig> = {
     progressBar: true,
     timeOut: 2000
