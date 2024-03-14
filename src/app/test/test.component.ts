@@ -23,7 +23,7 @@ export class TestComponent {
     };
     
     showTest: boolean = true;
-    newUserEmail: string= "amel@a.a";//add after newUserEmail: string= "";
+    newUserEmail: string= "";
     newUserId: number= 0;
     userFound: boolean = false;
     user: User | undefined;

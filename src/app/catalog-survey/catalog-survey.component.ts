@@ -26,22 +26,6 @@ import 'ag-grid-community/styles/ag-theme-quartz.css';
     imports: [NavComponent, CommonModule, FormsModule, ToastrModule, AgGridAngular]
 })
 export class CatalogSurveyComponent {
-  // Row Data: The data to be displayed.
-  // rowData = [
-  //   { id: "1", name: "Test 1", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
-  //   { id: "2", name: "Test 2", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
-  //   { id: "3", name: "Test 3", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
-  //   { id: "4", name: "Test 4", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
-  //   { id: "5", name: "Test 5", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
-  //   { id: "6", name: "Test 6", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
-  //   { id: "7", name: "Test 7", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
-  //   { id: "8", name: "Test 8", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
-  //   { id: "9", name: "Test 9", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
-  //   { id: "10", name: "Test 10", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 1  },
-  //   { id: "11", name: "Test 11", created: "2024-03-06T21:51:47.2777722", questions: 1, users: 1  },
-  //   { id: "12", name: "Test 12", created: "2024-03-06T21:51:47.2777722", questions: 2, users: 0  },
-  // ];
-
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
     { headerName: "ID", field: "id", filter: true, hide: true},
@@ -51,15 +35,13 @@ export class CatalogSurveyComponent {
     { headerName: "Users", field: "users", filter: true },
   ];
   gridOptions = {
-    // Ostale postavke konfiguracije ag-Grid-a
     onRowClicked: this.onRowClicked.bind(this)
   };
-  // Metoda koja se poziva prilikom klika na red
   onRowClicked(event: any) {
     this.SurveySelectedId=event.data.id;
     this.newQuestionUsers = event.data.users;
     this.newQuestionNameShowForm = event.data.name
-    console.log('Row clicked. ID:', event.data);
+    // console.log('Row clicked. ID:', event.data);
   }
   
   pagination:boolean = true;
