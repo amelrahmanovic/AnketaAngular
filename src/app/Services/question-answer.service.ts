@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionAnswerService {
-  uri = 'http://localhost:56115/api/QuestionAnswer';
+  uri = environment.apiUrl+'/QuestionAnswer';
   constructor(private http: HttpClient) { }
   delete(questionId: number){
     return this.http.delete(`${this.uri}`+'/'+questionId);

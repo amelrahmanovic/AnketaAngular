@@ -1,12 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Test } from '../Models/Test';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserCatalogSurveryService {
-  uri = 'http://localhost:56115/api/UserCatalogSurvery';
+  uri = environment.apiUrl+'/UserCatalogSurvery';
   constructor(private http: HttpClient) { }
   post(Email: string, CatalogSurveyId: number)
   {

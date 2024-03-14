@@ -1,11 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionService {
-  uri = 'http://localhost:56115/api/Question';
+  uri = environment.apiUrl+'/Question';
   constructor(private http: HttpClient) { }
   get(id: number) 
   {
