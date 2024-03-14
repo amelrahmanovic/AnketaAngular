@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -7,10 +7,18 @@ import { environment } from '../../environments/environment';
 })
 export class UserService {
   uri = environment.apiUrl+'/User';
-  constructor(private http: HttpClient) { }
+  accessToken: any;
+
+  constructor(private http: HttpClient) { 
+    this.accessToken = localStorage.getItem('accessToken');
+  }
   
   get(email: string) 
   {
-    return this.http.get(`${this.uri}`+'/'+email);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.get(`${this.uri}`+'/'+email, { headers: reqHeader });
   }
 }

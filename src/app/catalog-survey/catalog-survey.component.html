@@ -26,7 +26,7 @@
         <div>
           <button class="btn btn-light" (click)="AddQuestion(SurveySelectedId, true)"><i class="fa-solid fa-plus"></i> Question</button>
           <button class="btn btn-light margin-left-10px" (click)="ShowQuestions(SurveySelectedId, true)"> <i class="fa-solid fa-magnifying-glass"></i> Questions</button>
-          <button class="btn btn-light margin-left-10px" (click)="newUserAnswer(SurveySelectedId, true)"><i class="fa-solid fa-plus"></i> User</button>
+          <button class="btn btn-light margin-left-10px" (click)="newUserAnswer(SurveySelectedId, true)"> <i class="fa-solid fa-user-plus"></i> </button>
           <button class="btn btn-light margin-left-10px" (click)="showUser(SurveySelectedId, true)"> <i class="fa-solid fa-users"></i> </button>
           <button *ngIf="newQuestionUsers===0" class="btn btn-danger margin-left-10px" (click)="deleteSurvey(SurveySelectedId)"> <i class="fa-solid fa-trash"></i> Survey</button>
           <button class="btn btn-light margin-left-10px" (click)="hideSurvey(SurveySelectedId)"> Hide </button>

@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -7,8 +7,17 @@ import { environment } from '../../environments/environment';
 })
 export class CatalogSurveyQuestionService {
   uri = environment.apiUrl+'/CatalogSurveyQuestion';
-  constructor(private http: HttpClient) { }
+  accessToken: any;
+
+  constructor(private http: HttpClient) { 
+    this.accessToken = localStorage.getItem('accessToken');
+  }
+
   delete(questionId: number, catalogSurveyId: number){
-    return this.http.delete(`${this.uri}`+'/'+questionId+'?catalogSurveyId='+catalogSurveyId);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.delete(`${this.uri}`+'/'+questionId+'?catalogSurveyId='+catalogSurveyId, { headers: reqHeader });
   }
 }

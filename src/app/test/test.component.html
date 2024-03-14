@@ -1,7 +1,7 @@
 <app-nav></app-nav>
 
 <!-- Login -->
-<div class="form-control" *ngIf="!user">
+<div class="form-control margin-top-10px" *ngIf="!user">
     <div class="mb-3">
         <label class="form-label">E-mail</label>
         <input type="email" class="form-control"  placeholder="example@example.com" [(ngModel)]="newUserEmail" required>
@@ -13,7 +13,7 @@
 </div>
 
 <!-- Tests -->
-<div class="form-control" *ngIf="user">
+<div class="form-control margin-top-10px" *ngIf="user">
 
     <table class="table table-striped table-hover" *ngIf="tests.length>0 && showTest">
         <thead>

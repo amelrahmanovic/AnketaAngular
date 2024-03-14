@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Test } from '../Models/Test';
 import { environment } from '../../environments/environment';
@@ -8,28 +8,52 @@ import { environment } from '../../environments/environment';
 })
 export class UserCatalogSurveryService {
   uri = environment.apiUrl+'/UserCatalogSurvery';
-  constructor(private http: HttpClient) { }
+  accessToken: any;
+  
+  constructor(private http: HttpClient) {
+    this.accessToken = localStorage.getItem('accessToken');
+  }
   post(Email: string, CatalogSurveyId: number)
   {
     const QuestionNewVM = {
       Email: Email,
       CatalogSurveyId: CatalogSurveyId
     };
-    return this.http.post(this.uri, QuestionNewVM);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.post(this.uri, QuestionNewVM, { headers: reqHeader });
   }
   get(id: number) 
   {
-    return this.http.get(`${this.uri}`+'/'+id);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.get(`${this.uri}`+'/'+id, { headers: reqHeader });
   }
   getTersts(id: number) 
   {
-    return this.http.get(`${this.uri}`+'/user/'+id);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.get(`${this.uri}`+'/user/'+id, { headers: reqHeader });
   }
   delete(userId: number, catalogSurveyId: number){
-    return this.http.delete(`${this.uri}`+'/'+userId+'?catalogSurveyId='+catalogSurveyId);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.delete(`${this.uri}`+'/'+userId+'?catalogSurveyId='+catalogSurveyId, { headers: reqHeader });
   }
   postUserQuestions(tests: Test[])
   {
-    return this.http.post(this.uri+'/user', tests);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.post(this.uri+'/user', tests, { headers: reqHeader });
   }
 }

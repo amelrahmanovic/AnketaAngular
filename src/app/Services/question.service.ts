@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 
@@ -7,10 +7,18 @@ import { environment } from '../../environments/environment';
 })
 export class QuestionService {
   uri = environment.apiUrl+'/Question';
-  constructor(private http: HttpClient) { }
+  accessToken: any;
+
+  constructor(private http: HttpClient) { 
+    this.accessToken = localStorage.getItem('accessToken');
+  }
   get(id: number) 
   {
-    return this.http.get(`${this.uri}`+'/'+id);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.get(`${this.uri}`+'/'+id, { headers: reqHeader });
   }
   post(catalogSurveyId: number, name: string)
   {
@@ -18,6 +26,10 @@ export class QuestionService {
       catalogSurveyId: catalogSurveyId,
       name: name
     };
-    return this.http.post(this.uri, QuestionNewVM);
+    var reqHeader = new HttpHeaders({ 
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer ' + this.accessToken
+    });
+    return this.http.post(this.uri, QuestionNewVM, { headers: reqHeader });
   }
 }

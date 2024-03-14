@@ -282,7 +282,7 @@ export class CatalogSurveyComponent {
     this.serviceuserCatalogSurveryService.get(id).subscribe(
       (data: any) => {
         this.listUsers = data;
-        console.log(data);
+        // console.log(data);
       },
       (error) => {
         this.toastr.error('Error:'+error, 'Error', this.toastOptions);
