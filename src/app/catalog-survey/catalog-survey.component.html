@@ -14,12 +14,28 @@
     [paginationPageSize]="paginationPageSize"
     [paginationPageSizeSelector]="paginationPageSizeSelector"
     [paginationPageSize]="paginationPageSizeSelector[0]"
+    [gridOptions]="gridOptions"
 
     [rowData]="listCatalogSurveys"
     [columnDefs]="colDefs">
     </ag-grid-angular>
 
-    <table class="table table-striped table-hover" *ngIf="listCatalogSurveys.length>0">
+    <div *ngIf="SurveySelectedId>0" class="card margin-top-10px">
+      <div class="card-body">
+        <div class="card-title">{{newQuestionNameShowForm}}:</div>
+        <div>
+          <button class="btn btn-light" (click)="AddQuestion(SurveySelectedId, true)"><i class="fa-solid fa-plus"></i> Question</button>
+          <button class="btn btn-light margin-left-10px" (click)="ShowQuestions(SurveySelectedId, true)"> <i class="fa-solid fa-magnifying-glass"></i> Questions</button>
+          <button class="btn btn-light margin-left-10px" (click)="newUserAnswer(SurveySelectedId, true)"><i class="fa-solid fa-plus"></i> User</button>
+          <button class="btn btn-light margin-left-10px" (click)="showUser(SurveySelectedId, true)"> <i class="fa-solid fa-users"></i> </button>
+          <button *ngIf="newQuestionUsers===0" class="btn btn-danger margin-left-10px" (click)="deleteSurvey(SurveySelectedId)"> <i class="fa-solid fa-trash"></i> Survey</button>
+          <button class="btn btn-light margin-left-10px" (click)="hideSurvey(SurveySelectedId)"> Hide </button>
+        </div>
+      </div>
+      
+    </div>
+
+    <table class="table table-striped table-hover" *ngIf="listCatalogSurveys.length>0" hidden>
         <thead>
           <tr>
             <th scope="col">Name</th>
@@ -167,7 +183,7 @@
       <tr *ngFor="let x of listUsers">
         <td scope="row">{{x.email}}</td>
         <td scope="row">Successful: {{x.successfulAnswers}} Wrong: {{x.wrongAnswers}}</td>
-        <td scope="row">{{(x.successfulAnswers/(x.successfulAnswers+x.wrongAnswers))*100}}%</td>
+        <td scope="row">{{(x.successfulAnswers/(x.successfulAnswers+x.wrongAnswers))*100 | number:'1.2-2'}}%</td>
         <td scope="row">
           <span *ngIf="x.finished">
             <i class="fa-solid fa-circle-check"></i>
@@ -194,17 +210,20 @@
         <ul class="list-group list-group-flush">
           <li class="list-group-item">Question: {{x2.questionName}}</li>
           <li [ngClass]="{
-            'backgroundGreen': x3.isCorrect===booleanConvert(x3.userAnswer), 
-            'backgroundRed': x3.isCorrect!==booleanConvert(x3.userAnswer)}" 
+            'backgroundGreen': (stringConvert(x3.isCorrect)===x3.userAnswer && x3.userAnswer==='true') || (stringConvert(x3.isCorrect)===x3.userAnswer && x3.userAnswer==='false'),
+            'backgroundRed': stringConvert(x3.isCorrect)!==x3.userAnswer}" 
             class="list-group-item" *ngFor="let x3 of x2.questionAnswerUserVM"
           >
-            {{x3.name}} ({{x3.isCorrect}}): User reply: 
+            {{x3.name}} ({{x3.isCorrect}}): User reply:
             
-            <span *ngIf="x3.userAnswer">
+            <span *ngIf="x3.userAnswer==='true'">
               <i class="fa-solid fa-circle-check"></i>
             </span>
-            <span *ngIf="!x3.userAnswer">
+            <span *ngIf="x3.userAnswer==='false'">
               <i class="fa-solid fa-circle-xmark"></i>
+            </span>
+            <span *ngIf="x3.userAnswer==='None'">
+              <i class="fa-solid fa-question"></i>
             </span>
 
           </li>

@@ -13,7 +13,7 @@ import { UsersQuestionsAnwers } from '../Models/UsersQuestionsAnwers';
 import { ToastrService, ToastrModule, IndividualConfig } from 'ngx-toastr';
 
 import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
-import { ColDef } from 'ag-grid-community'; // Column Definition Type Interface
+import { ColDef, ValueGetterParams  } from 'ag-grid-community'; // Column Definition Type Interface
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 
@@ -44,12 +44,23 @@ export class CatalogSurveyComponent {
 
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
-    { headerName: "ID", field: "id", filter: true},
+    { headerName: "ID", field: "id", filter: true, hide: true},
     { headerName: "Test", field: "name", filter: true },
     { headerName: "Created", field: "created", filter: true },
     { headerName: "Questions", field: "questions", filter: true },
     { headerName: "Users", field: "users", filter: true },
   ];
+  gridOptions = {
+    // Ostale postavke konfiguracije ag-Grid-a
+    onRowClicked: this.onRowClicked.bind(this)
+  };
+  // Metoda koja se poziva prilikom klika na red
+  onRowClicked(event: any) {
+    this.SurveySelectedId=event.data.id;
+    this.newQuestionUsers = event.data.users;
+    this.newQuestionNameShowForm = event.data.name
+    console.log('Row clicked. ID:', event.data);
+  }
   
   pagination:boolean = true;
   paginationPageSize:number = 500;
@@ -58,6 +69,9 @@ export class CatalogSurveyComponent {
 
   booleanConvert(arg0: string) {
     return Boolean(arg0);
+  }
+  stringConvert(arg0: boolean) {
+    return String(arg0);
   }
   toastOptions: Partial<IndividualConfig> = {
     progressBar: true,
@@ -71,9 +85,13 @@ export class CatalogSurveyComponent {
   newSurvey: boolean = false;
   newSurveyName: string= "";
 
+  SurveySelectedId: number = 0;
+
   newQuestionSurveySelectedId: number = 0;
+  newQuestionUsers: number = 0;
   newQuestion: boolean = false;
   newQuestionName: string= "";
+  newQuestionNameShowForm: string= "";
 
   showQuestionsSelectedId: number = 0;
   showQuestion: boolean = false;
@@ -172,6 +190,11 @@ export class CatalogSurveyComponent {
       this.newUserAnswer(0, false);
       this.loadData();
     }, this.waitTime);
+  }
+  hideSurvey(newQuestionSurveySelectedId: number){
+    this.SurveySelectedId = 0;
+    this.newQuestionUsers = 0;
+    this.newQuestionNameShowForm = ""
   }
 
   AddQuestion(id: number, show: boolean){
@@ -277,6 +300,7 @@ export class CatalogSurveyComponent {
     this.serviceuserCatalogSurveryService.get(id).subscribe(
       (data: any) => {
         this.listUsers = data;
+        console.log(data);
       },
       (error) => {
         this.toastr.error('Error:'+error, 'Error', this.toastOptions);

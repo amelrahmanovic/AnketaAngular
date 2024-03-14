@@ -3,7 +3,7 @@ import { NavComponent } from "../Shared/nav/nav.component";
 import { FormsModule } from '@angular/forms';
 import { UserService } from '../Services/user.service';
 import { User } from '../Models/User';
-import { Test } from '../Models/Test';
+import { QuestionAnswerUserVM, Test, UserQuestionAnswerVM } from '../Models/Test';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
 import { UserCatalogSurveryService } from '../Services/user-catalog-survery.service';
@@ -75,12 +75,19 @@ export class TestComponent {
         this.questionAnswerUserVMId=0;
         this.width = ((this.questionAnswerUserVMId+1)/(this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs.length))*100;
         this.tests[this.catalogSurveyIndex].testDone = 'true';
+
+        this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs[this.questionAnswerUserVMId].questionAnswerUserVM.forEach(key =>{
+            key.userAnswer=false;
+        });
     }
     nextQuestion(question: number){
         this.questionAnswerUserVMId += question;
         this.width = ((this.questionAnswerUserVMId+1)/(this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs.length))*100;
     }
     completed(){
+        this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs[this.questionAnswerUserVMId].questionAnswerUserVM.forEach(key =>{
+            key.userAnswer=String(key.userAnswer);
+        });
         console.log("tests");
         console.log(this.tests);
 
@@ -115,5 +122,8 @@ export class TestComponent {
         
 
         this.toastr.success('The test was completed successfully.', 'Success', this.toastOptions);
+    }
+    changeAnswer(questionAnswerUserVM: QuestionAnswerUserVM){
+        questionAnswerUserVM.userAnswer=String(questionAnswerUserVM.userAnswer);
     }
 }
