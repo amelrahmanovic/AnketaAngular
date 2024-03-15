@@ -31,10 +31,23 @@ export class IdentityService {
   login(credentials : NgForm)
   {
     const formData = credentials.value;
+    if(formData.rememberMe === "") {
+      formData.rememberMe = false;
+    }
+    else{
+      if(formData.rememberMe === true) {
+        formData.rememberMe = true;
+      }
+      else{
+        formData.rememberMe = false;
+      }
+    }
     const loginVM = {
       username: formData.username,
       password: formData.password,
+      rememberMe: formData.rememberMe,
     };
+    alert(formData.rememberMe);
     return this.http.post(this.uri+ "/authenticate/login", loginVM);
   }
 }

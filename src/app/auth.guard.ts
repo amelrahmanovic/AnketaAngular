@@ -24,7 +24,10 @@ export class authGuard implements CanActivate {
 
     const isRefreshSuccess = await this.refreshingTokens(token);
     if (!isRefreshSuccess) {
-      this.router.navigate(["login"]);
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      this.toastr.error("Refresh token failed renew", "Error")
+      this.router.navigate(["Login"]);
     }
 
     return isRefreshSuccess;

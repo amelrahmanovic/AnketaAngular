@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-nav',
@@ -13,7 +14,8 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 export class NavComponent {
   public jwtHelper: JwtHelperService = new JwtHelperService();
   public isExpanded = false;
-  constructor(private router: Router) { }
+
+  constructor(private router: Router, private toastr: ToastrService) { }
   collapse() {
     this.isExpanded = false;
   }
@@ -32,6 +34,7 @@ export class NavComponent {
   public logOut(){
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    this.toastr.success("Logout success.", "Logout")
     this.router.navigate(["Login"]);
   }
 
