@@ -110,10 +110,17 @@
         </thead>
         <tbody>
           <tr *ngFor="let x of listQuestion">
-            <td scope="row">{{x.name}} {{x.id}} {{showQuestionsSelectedId}}</td>
+            <td scope="row">{{x.name}}</td>
             <td scope="row">
-                <span *ngFor="let y of x.questionAnswer">{{y.name}} : {{y.isCorrect}} 
-                    <button class="btn btn-danger" (click)="deleteQuestionAnswer(y.id)"><i class="fa-solid fa-trash"></i></button><br> 
+                <span *ngFor="let y of x.questionAnswer">{{y.name}} : 
+                  <span *ngIf="y.isCorrect===true">
+                    <i class="fa-solid fa-circle-check"></i>
+                  </span>
+                  <span *ngIf="y.isCorrect===false">
+                    <i class="fa-solid fa-circle-xmark"></i>
+                  </span>
+
+                    <button class="btn btn-danger margin-left-10px" (click)="deleteQuestionAnswer(y.id)"><i class="fa-solid fa-trash"></i></button><br> 
                 </span>
             </td>
             <td>
