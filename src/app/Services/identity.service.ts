@@ -47,7 +47,6 @@ export class IdentityService {
       password: formData.password,
       rememberMe: formData.rememberMe,
     };
-    alert(formData.rememberMe);
     return this.http.post(this.uri+ "/authenticate/login", loginVM);
   }
 }
