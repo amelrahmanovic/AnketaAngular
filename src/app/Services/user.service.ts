@@ -7,18 +7,11 @@ import { environment } from '../../environments/environment';
 })
 export class UserService {
   uri = environment.apiUrl+'/User';
-  accessToken: any;
 
-  constructor(private http: HttpClient) { 
-    this.accessToken = localStorage.getItem('accessToken');
-  }
+  constructor(private http: HttpClient) { }
   
   get(email: string) 
   {
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.get(`${this.uri}`+'/'+email, { headers: reqHeader });
+    return this.http.get(`${this.uri}`+'/'+email);
   }
 }

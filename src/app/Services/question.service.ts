@@ -7,18 +7,12 @@ import { environment } from '../../environments/environment';
 })
 export class QuestionService {
   uri = environment.apiUrl+'/Question';
-  accessToken: any;
 
   constructor(private http: HttpClient) { 
-    this.accessToken = localStorage.getItem('accessToken');
   }
   get(id: number) 
   {
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.get(`${this.uri}`+'/'+id, { headers: reqHeader });
+    return this.http.get(`${this.uri}`+'/'+id);
   }
   post(catalogSurveyId: number, name: string)
   {
@@ -26,10 +20,6 @@ export class QuestionService {
       catalogSurveyId: catalogSurveyId,
       name: name
     };
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.post(this.uri, QuestionNewVM, { headers: reqHeader });
+    return this.http.post(this.uri, QuestionNewVM);
   }
 }

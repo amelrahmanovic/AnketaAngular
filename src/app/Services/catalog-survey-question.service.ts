@@ -7,17 +7,10 @@ import { environment } from '../../environments/environment';
 })
 export class CatalogSurveyQuestionService {
   uri = environment.apiUrl+'/CatalogSurveyQuestion';
-  accessToken: any;
 
-  constructor(private http: HttpClient) { 
-    this.accessToken = localStorage.getItem('accessToken');
-  }
+  constructor(private http: HttpClient) { }
 
   delete(questionId: number, catalogSurveyId: number){
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.delete(`${this.uri}`+'/'+questionId+'?catalogSurveyId='+catalogSurveyId, { headers: reqHeader });
+    return this.http.delete(`${this.uri}`+'/'+questionId+'?catalogSurveyId='+catalogSurveyId);
   }
 }

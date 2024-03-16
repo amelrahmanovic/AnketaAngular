@@ -7,29 +7,19 @@ import { environment } from '../../environments/environment';
 })
 export class QuestionAnswerService {
   uri = environment.apiUrl+'/QuestionAnswer';
-  accessToken: any;
 
-  constructor(private http: HttpClient) { 
-    this.accessToken = localStorage.getItem('accessToken');
+  constructor(private http: HttpClient) {
   }
   delete(questionId: number){
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.delete(`${this.uri}`+'/'+questionId, { headers: reqHeader });
+    return this.http.delete(`${this.uri}`+'/'+questionId);
   }
   post(name: string, questionId: number, isCorrect: boolean)
   {
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
     const questionAnswerNewVM = {
       name: name,
       questionId: questionId,
       isCorrect: isCorrect
     };
-    return this.http.post(this.uri, questionAnswerNewVM, { headers: reqHeader });
+    return this.http.post(this.uri, questionAnswerNewVM);
   }
 }

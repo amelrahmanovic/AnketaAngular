@@ -8,10 +8,8 @@ import { NgForm } from '@angular/forms';
 })
 export class IdentityService {
   uri = environment.apiUrl;
-  accessToken: any;
   
   constructor(private http: HttpClient) {
-    this.accessToken = localStorage.getItem('accessToken');
   }
   
   new(registerModel : NgForm)
@@ -22,11 +20,7 @@ export class IdentityService {
       email: formData.email,
       password: formData.password,
     };
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.post(this.uri+ "/authenticate/register", newVM, { headers: reqHeader });
+    return this.http.post(this.uri+ "/authenticate/register", newVM);
   }
   login(credentials : NgForm)
   {

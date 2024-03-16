@@ -7,36 +7,21 @@ import { environment } from '../../environments/environment';
 })
 export class CatalogSurveyService {
   uri = environment.apiUrl+'/CatalogSurvey';
-  accessToken: any;
 
-  constructor(private http: HttpClient) { 
-    this.accessToken = localStorage.getItem('accessToken');
-  }
+  constructor(private http: HttpClient) { }
   
   get() 
   {
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.get(`${this.uri}`, { headers: reqHeader });
+    return this.http.get(`${this.uri}`);
   }
   post(name: string)
   {
     const surveyVM = {
       name: name
     };
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.post(this.uri, surveyVM, { headers: reqHeader });
+    return this.http.post(this.uri, surveyVM);
   }
   delete(id: number){
-    var reqHeader = new HttpHeaders({ 
-      'Content-Type': 'application/json',
-      'Authorization': 'Bearer ' + this.accessToken
-    });
-    return this.http.delete(`${this.uri}`+'/'+id, { headers: reqHeader });
+    return this.http.delete(`${this.uri}`+'/'+id);
   }
 }
