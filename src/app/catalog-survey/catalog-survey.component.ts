@@ -114,7 +114,7 @@ export class CatalogSurveyComponent {
         this.listCatalogSurveys = data;
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
   }
@@ -129,7 +129,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
     
@@ -144,7 +144,7 @@ export class CatalogSurveyComponent {
     this.serviceCatalogSurvey.delete(id).subscribe(data=>
       (data: any) => {},
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
 
@@ -163,7 +163,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
     
@@ -189,7 +189,7 @@ export class CatalogSurveyComponent {
     this.serviceQuestion.post(this.newQuestionSurveySelectedId, this.newQuestionName).subscribe(data=>
       (data: any) => {},
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
 
@@ -211,7 +211,7 @@ export class CatalogSurveyComponent {
         this.listQuestion = data;
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
 
@@ -220,7 +220,7 @@ export class CatalogSurveyComponent {
     this.serviceQuestionAnswerService.delete(id).subscribe(data=>
       (data: any) => {},
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
 
@@ -236,7 +236,7 @@ export class CatalogSurveyComponent {
     this.serviceCatalogSurveyQuestionService.delete(id, this.showQuestionsSelectedId).subscribe(data=>
       (data: any) => {},
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
     this.showQuestion=false;
@@ -252,7 +252,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
     
@@ -263,7 +263,7 @@ export class CatalogSurveyComponent {
           this.listQuestion = data;
         },
         (error) => {
-          this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+          this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
         }
       )
     }, this.waitTime);
@@ -285,7 +285,7 @@ export class CatalogSurveyComponent {
         // console.log(data);
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
   }
@@ -294,7 +294,7 @@ export class CatalogSurveyComponent {
       (data: any) => {
       },
       (error) => {
-        this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
     )
 
@@ -305,7 +305,7 @@ export class CatalogSurveyComponent {
           this.listUsers = data;
         },
         (error) => {
-          this.toastr.error('Error:'+error, 'Error', this.toastOptions);
+          this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
         }
       )//duplicated
 
