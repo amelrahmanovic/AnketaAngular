@@ -12,12 +12,12 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
    });
    
    return next(modifiedReq).pipe(
-      tap(resp => console.log('response', resp)), //Vraca response podatke
+      //tap(resp => console.log('response', resp)), //Vraca response podatke
 
       catchError((error: HttpErrorResponse) => {
-         console.log('error.status');
-         console.log(error.status);
-         console.log(error);
+         //console.log('error.status');
+         //console.log(error.status);
+         //console.log(error);
          if (error && (error.status === 0 || error.status === 401)) {
             
             if(localStorage.getItem("accessToken") && localStorage.getItem("refreshToken"))
@@ -32,7 +32,7 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
                     return next(modifiedReq2);
                   },
                   (error) => {
-                    console.log("Errrrrrr");
+                    //console.log("Errrrrrr");
                     return next(modifiedReq);
                   }
                )
