@@ -76,18 +76,24 @@ export class TestComponent {
         this.width = ((this.questionAnswerUserVMId+1)/(this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs.length))*100;
         this.tests[this.catalogSurveyIndex].testDone = 'true';
 
-        this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs[this.questionAnswerUserVMId].questionAnswerUserVM.forEach(key =>{
-            key.userAnswer=false;
+        this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs.forEach(key2 => {
+            key2.questionAnswerUserVM.forEach(key2 =>{
+                key2.userAnswer=false;
+            });
         });
+        
     }
     nextQuestion(question: number){
         this.questionAnswerUserVMId += question;
         this.width = ((this.questionAnswerUserVMId+1)/(this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs.length))*100;
     }
     completed(){
-        this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs[this.questionAnswerUserVMId].questionAnswerUserVM.forEach(key =>{
-            key.userAnswer=String(key.userAnswer);
+        this.tests[this.catalogSurveyIndex].userQuestionAnswerVMs.forEach(key2 => {
+            key2.questionAnswerUserVM.forEach(key2 =>{
+                key2.userAnswer=String(key2.userAnswer);
+            });
         });
+        
         console.log("tests");
         console.log(this.tests);
 

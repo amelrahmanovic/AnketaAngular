@@ -2,12 +2,13 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { NgForm } from '@angular/forms';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IdentityService {
-  uri = environment.apiUrl;
+  private uri = environment.apiUrl;
   
   constructor(private http: HttpClient) {
   }
@@ -42,5 +43,14 @@ export class IdentityService {
       rememberMe: formData.rememberMe,
     };
     return this.http.post(this.uri+ "/authenticate/login", loginVM);
+  }
+  refreshToken() {
+
+    const tokenModelVM = {
+      accessToken: localStorage.getItem("accessToken"),
+      refreshToken: localStorage.getItem("refreshToken"),
+    };
+
+    return this.http.post(environment.apiUrl + "/authenticate/refresh-token", tokenModelVM);
   }
 }

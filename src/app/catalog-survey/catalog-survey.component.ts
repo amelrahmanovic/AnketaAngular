@@ -16,6 +16,7 @@ import { AgGridAngular } from 'ag-grid-angular'; // AG Grid Component
 import { ColDef, ValueGetterParams  } from 'ag-grid-community'; // Column Definition Type Interface
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
+import { IdentityService } from '../Services/identity.service';
 
 
 @Component({
@@ -99,8 +100,21 @@ export class CatalogSurveyComponent {
     private serviceQuestionAnswerService: QuestionAnswerService, 
     private serviceCatalogSurveyQuestionService: CatalogSurveyQuestionService,
     private serviceuserCatalogSurveryService: UserCatalogSurveryService,
-    private toastr: ToastrService) {
+    private toastr: ToastrService,
+    private identityService: IdentityService) {
     this.loadData();
+
+    // this.identityService.refreshToken().subscribe(
+    //   (data: any) => {
+    //     console.log(data);
+    //     localStorage.setItem("accessToken", data.accessToken);
+    //     localStorage.setItem("refreshToken", data.refreshToken);
+    //   },
+    //   (error) => {
+    //     this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
+    //   }
+    // ) EXPERIMENT TO auth.interceptor.ts
+
 
     // // EXAMPLE
     // this.toastr.success('Uspješno!', 'Success', this.toastOptions);
