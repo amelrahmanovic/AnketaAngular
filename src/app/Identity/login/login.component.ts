@@ -38,7 +38,7 @@ export class LoginComponent {
             this.invalidLogin = false;
           }, 4*1000);
         },
-        complete: () => console.info('Login complete')
+        // complete: () => console.info('Login complete')
       });
     }
   }

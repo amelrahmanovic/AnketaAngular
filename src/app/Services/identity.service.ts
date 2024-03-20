@@ -2,13 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { NgForm } from '@angular/forms';
-import { lastValueFrom } from 'rxjs';
+import { Observable, lastValueFrom } from 'rxjs';
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
   providedIn: 'root'
 })
 export class IdentityService {
   private uri = environment.apiUrl;
+  public jwtHelper: JwtHelperService = new JwtHelperService();
   
   constructor(private http: HttpClient) {
   }
@@ -52,5 +54,38 @@ export class IdentityService {
     };
 
     return this.http.post(environment.apiUrl + "/authenticate/refresh-token", tokenModelVM);
+  }
+  refreshTokenRnd() {
+    return this.http.get("/authenticate/refresh-token");
+  }
+  refreshTokenInService(): Observable<any> {
+    
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken && !this.jwtHelper.isTokenExpired(accessToken)) {
+      const tokenModelVM = 
+      {
+        accessToken: localStorage.getItem("accessToken"),
+        refreshToken: localStorage.getItem("refreshToken"),
+      };
+      return this.http.post<any>(environment.apiUrl + "/authenticate/refresh-token", tokenModelVM);
+    }
+
+    const tokenModelVM = 
+    {
+      accessToken: "accessToken",
+      refreshToken: "refreshToken",
+    };
+    return this.http.post<any>(environment.apiUrl + "/authenticate/refresh-token", tokenModelVM);
+  }
+  validateToken(token: string)
+  {
+    if (token && !this.jwtHelper.isTokenExpired(token)) 
+    {
+      return true;
+    }
+    else
+    {
+      return false;
+    }
   }
 }

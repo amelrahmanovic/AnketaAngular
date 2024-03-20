@@ -17,6 +17,8 @@ import { ColDef, ValueGetterParams  } from 'ag-grid-community'; // Column Defini
 import 'ag-grid-community/styles/ag-grid.css';
 import 'ag-grid-community/styles/ag-theme-quartz.css';
 import { IdentityService } from '../Services/identity.service';
+import { JwtHelperService } from '@auth0/angular-jwt';
+// import { TimerComponent } from "../Shared/timer/timer.component"; ---> u app.component.ts
 
 
 @Component({
@@ -27,6 +29,9 @@ import { IdentityService } from '../Services/identity.service';
     imports: [NavComponent, CommonModule, FormsModule, ToastrModule, AgGridAngular]
 })
 export class CatalogSurveyComponent {
+  public jwtHelper: JwtHelperService = new JwtHelperService();
+
+  
   // Column Definitions: Defines the columns to be displayed.
   colDefs: ColDef[] = [
     { headerName: "ID", field: "id", filter: true, hide: true},
@@ -303,6 +308,44 @@ export class CatalogSurveyComponent {
       }
     )
   }
+  // showUser(id: number, show: boolean){
+  //   this.showUsers=show;
+  //   this.showUsersCatalogSurveyId=id;
+
+  //   //Refresh token
+  //   const token = localStorage.getItem("accessToken");
+  //   if (token && this.jwtHelper.isTokenExpired(token)) 
+  //   {
+    
+  //     this.identityService.refreshToken().subscribe(
+  //       (data: any) => {
+  //         console.log(data);
+  //         localStorage.setItem("accessToken", data.accessToken);
+  //         localStorage.setItem("refreshToken", data.refreshToken);
+  //       },
+  //       (error) => {
+  //         this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
+  //       }
+  //     )
+
+  //   }
+  //   //Refresh token
+    
+  //   setTimeout(() => {
+  //     // Your code to execute after x seconds
+  //     this.serviceuserCatalogSurveryService.get(id).subscribe(
+  //       (data: any) => {
+  //         this.listUsers = data;
+  //         // console.log(data);
+  //       },
+  //       (error) => {
+  //         this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
+  //       }
+  //     )
+
+  //   }, this.waitTime);
+    
+  // }
   deleteUserCatalogSurvery(id: number){
     this.serviceuserCatalogSurveryService.delete(id, this.showUsersCatalogSurveyId).subscribe(
       (data: any) => {
