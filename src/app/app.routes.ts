@@ -1,6 +1,5 @@
 import { Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { AdminComponent } from './admin/admin.component';
 import { CatalogSurveyComponent } from './catalog-survey/catalog-survey.component';
 import { TestComponent } from './test/test.component';
 import { RegisterComponent } from './Identity/register/register.component';
@@ -17,11 +16,6 @@ export const routes: Routes = [
         component: HomeComponent,
     },
     {
-        path: 'Admin',
-        component: AdminComponent,
-        canActivate: [authGuard]
-    },
-    {
         path: 'CatalogSurvey',
         component: CatalogSurveyComponent,
         canActivate: [authGuard]
@@ -33,7 +27,7 @@ export const routes: Routes = [
     {
         path: 'Register',
         component: RegisterComponent,
-        canActivate: [authGuard]
+        //canActivate: [authGuard] //If have no admin we can add new
     },
     {
         path: 'Login',

@@ -9,9 +9,11 @@
           <li class="nav-item">
             <a class="nav-link active" aria-current="page" [routerLink]="'/Home'">Home</a>
           </li>
-          <li *ngIf="isUserAuthenticated()" class="nav-item">
+          
+          <li *ngIf="!isUserAuthenticated() && isEnableNewAdmin" class="nav-item">
             <a class="nav-link active" aria-current="page" [routerLink]="'/Register'">New Admin</a>
           </li>
+
           <li *ngIf="isUserAuthenticated()" class="nav-item">
             <a class="nav-link active" aria-current="page" [routerLink]="'/CatalogSurvey'">Catalog Survey</a>
           </li>
@@ -20,7 +22,7 @@
             <a class="nav-link active" aria-current="page" [routerLink]="'/Test'">Test</a>
           </li>
           <li *ngIf="isUserAuthenticated()" class="nav-item">
-            <a class="nav-link active" aria-current="page" [routerLink]="'/Register'">Register</a>
+            <a class="nav-link active" aria-current="page" [routerLink]="'/Register'">New Admin</a>
           </li>
           <li *ngIf="!isUserAuthenticated()" class="nav-item">
             <a class="nav-link active" aria-current="page" [routerLink]="'/Login'">Login</a>

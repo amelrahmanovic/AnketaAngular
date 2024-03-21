@@ -15,13 +15,13 @@ export class IdentityService {
   constructor(private http: HttpClient) {
   }
   
-  new(registerModel : NgForm)
+  new(registerModel : any)
   {
-    const formData = registerModel.value;
+    console.log(registerModel);
     const newVM = {
-      username: formData.username,
-      email: formData.email,
-      password: formData.password,
+      username: registerModel.username,
+      email: registerModel.email,
+      password: registerModel.password,
     };
     return this.http.post(this.uri+ "/authenticate/register", newVM);
   }
@@ -54,6 +54,9 @@ export class IdentityService {
     };
 
     return this.http.post(environment.apiUrl + "/authenticate/refresh-token", tokenModelVM);
+  }
+  enableNewAdmin() {
+    return this.http.post(environment.apiUrl + "/authenticate/EnableNew", null);
   }
   refreshTokenRnd() {
     return this.http.get("/authenticate/refresh-token");
