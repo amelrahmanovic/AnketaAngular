@@ -1,0 +1,4 @@
+<form class="form-control margin-top-10px" [formGroup]="form" (ngSubmit)="onSubmit()">
+    <formly-form [form]="form" [fields]="fields" [model]="model"></formly-form>
+    <button class="btn btn-primary btn-block" type="submit" [disabled]="!form.valid">Save</button>
+</form>

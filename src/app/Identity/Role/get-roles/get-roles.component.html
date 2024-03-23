@@ -1,0 +1,33 @@
+<app-nav></app-nav>
+
+<div class="form-control margin-top-10px">
+  <button class="btn btn-light" (click)="showAdd=true">
+    <i class="fa-solid fa-circle-plus"></i> Role
+  </button>
+  
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Role</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of roles">
+        <td scope="row">{{x.name}}</td>
+        <td>
+            <button class="btn btn-danger" (click)="delete(x.name)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+      <tr>
+    </tbody>
+  </table>
+    
+</div>
+
+<div class="form-control margin-top-10px" *ngIf="showAdd">
+  <button class="btn btn-light" (click)="showAdd=false">
+    <i class="fa-solid fa-circle-xmark"></i> Role
+  </button>
+  <app-add-role (sendData)="receiveData($event)"></app-add-role>
+</div>

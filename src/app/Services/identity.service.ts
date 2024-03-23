@@ -15,6 +15,22 @@ export class IdentityService {
   constructor(private http: HttpClient) {
   }
   
+  addRole(registerModel : any)
+  {
+    const role = {
+      name: registerModel.role,
+    };
+    return this.http.post(this.uri+ "/authenticate/addrole", role);
+  }
+  getRoles()
+  {
+    return this.http.get(this.uri+ "/authenticate/getroles");
+  }
+  deleteRole(role: string)
+  {
+    return this.http.delete(this.uri+ "/authenticate/deleterole?role="+role);
+  }
+
   new(registerModel : any)
   {
     console.log(registerModel);
@@ -45,6 +61,14 @@ export class IdentityService {
       rememberMe: formData.rememberMe,
     };
     return this.http.post(this.uri+ "/authenticate/login", loginVM);
+  }
+  getUsers()
+  {
+    return this.http.get(this.uri+ "/authenticate/getusers");
+  }
+  deleteUser(userId: string)
+  {
+    return this.http.delete(this.uri+ "/authenticate/deleteuser/"+userId);
   }
   refreshToken() {
 

@@ -16,7 +16,7 @@ import { CommonModule } from '@angular/common';
 export class LoginComponent {
     public invalidLogin: boolean = false;
 
-    constructor(private router: Router, private toastr: ToastrService, private identityService: IdentityService) { }
+    constructor(private router: Router, private toastr: ToastrService, private identityService: IdentityService) {}
     
     login = (form: NgForm) => {
       this.identityService.login(form).subscribe({

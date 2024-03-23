@@ -1,0 +1,48 @@
+<app-nav></app-nav>
+
+<div class="form-control margin-top-10px">
+  <button class="btn btn-light" (click)="showAdd=true">
+    <i class="fa-solid fa-circle-plus"></i> User
+  </button>
+  
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">User name</th>
+        <th scope="col">E-mail</th>
+        <th scope="col">E-mail confimed</th>
+        <th scope="col">Phone</th>
+        <th scope="col">Phone confimed</th>
+        <th scope="col">Two factor</th>
+        <th scope="col">Locout</th>
+        <th scope="col">Locout end</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let x of users">
+        <td scope="row">{{x.id}}</td>
+        <td scope="row">{{x.userName}}</td>
+        <td scope="row">{{x.email}}</td>
+        <td scope="row">{{x.emailConfirmed}}</td>
+        <td scope="row">{{x.phoneNumber}}</td>
+        <td scope="row">{{x.phoneNumberConfirmed}}</td>
+        <td scope="row">{{x.twoFactorEnabled}}</td>
+        <td scope="row">{{x.lockoutEnabled}}</td>
+        <td scope="row">{{x.lockoutEnd}}</td>
+        <td>
+            <button class="btn btn-danger" (click)="delete(x.id)"><i class="fa-solid fa-trash"></i></button>
+        </td>
+      </tr>
+      <tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="form-control margin-top-10px" *ngIf="showAdd">
+  <button class="btn btn-light" (click)="showAdd=false">
+    <i class="fa-solid fa-circle-xmark"></i> User
+  </button>
+  <app-add-user (sendData)="receiveData($event)"></app-add-user>
+</div>
