@@ -5,7 +5,6 @@ import { TestComponent } from './test/test.component';
 import { RegisterComponent } from './Identity/register/register.component';
 import { LoginComponent } from './Identity/login/login.component';
 import { authGuard } from './auth.guard';
-import { AddRoleComponent } from './Identity/Role/get-roles/add-role/add-role.component';
 import { GetRolesComponent } from './Identity/Role/get-roles/get-roles.component';
 import { GetUsersComponent } from './Identity/get-users/get-users.component';
 
@@ -21,7 +20,8 @@ export const routes: Routes = [
     {
         path: 'CatalogSurvey',
         component: CatalogSurveyComponent,
-        canActivate: [authGuard]
+        canActivate: [authGuard],
+        data: { roles: ['Admin'] } 
     },
     {
         path: 'Test',
@@ -39,9 +39,13 @@ export const routes: Routes = [
     {
         path: 'GetRoles',
         component: GetRolesComponent,
+        canActivate: [authGuard],
+        data: { roles: ['Admin'] } 
     },
     {
         path: 'GetUsers',
         component: GetUsersComponent,
+        canActivate: [authGuard],
+        data: { roles: ['User'] } 
     },
 ];

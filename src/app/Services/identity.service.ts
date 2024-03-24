@@ -15,6 +15,26 @@ export class IdentityService {
   constructor(private http: HttpClient) {
   }
   
+  private getAccessTokenToken(): string | null {
+    // Retrieve token from local storage or any other source
+    return localStorage.getItem('accessToken');
+  }
+  getRolesFromJWT(): string[] {
+    const token = this.getAccessTokenToken();
+    if (token && !this.jwtHelper.isTokenExpired(token)) {
+        // Decode the token
+        const decodedToken = this.jwtHelper.decodeToken(token);
+        // Extract roles from the decoded token
+        const rolesClaim = decodedToken["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+        if (Array.isArray(rolesClaim)) {
+            return rolesClaim;
+        } else if (rolesClaim) {
+            return [rolesClaim];
+        }
+    }
+    return [];
+}
+  
   addRole(registerModel : any)
   {
     const role = {
