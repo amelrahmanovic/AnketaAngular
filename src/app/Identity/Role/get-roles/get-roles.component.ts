@@ -49,7 +49,7 @@ export class GetRolesComponent {
         (error) => {
           this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
         }
-     )
+      )
     }
     receiveData(receivedData: string) {
       this.showAdd=false;

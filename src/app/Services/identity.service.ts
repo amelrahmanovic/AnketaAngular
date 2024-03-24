@@ -33,11 +33,11 @@ export class IdentityService {
 
   new(registerModel : any)
   {
-    console.log(registerModel);
     const newVM = {
       username: registerModel.username,
       email: registerModel.email,
       password: registerModel.password,
+      userRoles: registerModel.userRoles,
     };
     return this.http.post(this.uri+ "/authenticate/register", newVM);
   }
