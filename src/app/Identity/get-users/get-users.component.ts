@@ -54,4 +54,17 @@ export class GetUsersComponent {
   receiveData(receivedData: string) {
     this.getData();
   }
+  deleteRole(id: string, role: string) {
+    this.identityService.deleteRoleUser(role, id).subscribe(
+      (data: any) => {},
+      (error) => {
+        this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
+      },
+    )
+
+    setTimeout(() =>{ 
+      this.getData();
+    }, this.waitTime);
+    
+  }
 }

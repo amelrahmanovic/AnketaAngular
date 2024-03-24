@@ -9,7 +9,9 @@
     <thead>
       <tr>
         <th scope="col">Id</th>
+        <th scope="col">Full name</th>
         <th scope="col">User name</th>
+        <th scope="col">Roles</th>
         <th scope="col">E-mail</th>
         <th scope="col">E-mail confimed</th>
         <th scope="col">Phone</th>
@@ -23,7 +25,16 @@
     <tbody>
       <tr *ngFor="let x of users">
         <td scope="row">{{x.id}}</td>
+        <td scope="row">{{x.firstName}} {{x.lastName}}</td>
         <td scope="row">{{x.userName}}</td>
+        <td scope="row"> 
+          <span *ngFor="let role of x.roles">
+            <div>
+              {{role}}
+              <button class="btn btn-danger" (click)="deleteRole(x.id, role)"><i class="fa-solid fa-trash"></i></button>
+            </div>
+          </span> 
+        </td>
         <td scope="row">{{x.email}}</td>
         <td scope="row">{{x.emailConfirmed}}</td>
         <td scope="row">{{x.phoneNumber}}</td>

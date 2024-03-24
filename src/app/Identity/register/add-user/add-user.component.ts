@@ -39,6 +39,25 @@ export class AddUserComponent implements OnInit {
       this.fields = 
     [
       {
+        key: 'firstName',
+        type: 'input',
+        templateOptions: {
+          label: 'First name',
+          placeholder: 'Enter your first name',
+          required: false
+        }
+      },
+      {
+        key: 'lastName',
+        type: 'input',
+        templateOptions: {
+          label: 'Last name',
+          placeholder: 'Enter your last name',
+          required: false
+        }
+      },
+
+      {
         key: 'username',
         type: 'input',
         templateOptions: {

@@ -9,4 +9,7 @@ export interface IdentityUsers {
     phoneNumberConfirmed: boolean
     twoFactorEnabled: boolean
     userName: string
+    firstName: string
+    lastName: string
+    roles: string[]
   }

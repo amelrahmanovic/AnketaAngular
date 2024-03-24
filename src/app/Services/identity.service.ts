@@ -50,6 +50,10 @@ export class IdentityService {
   {
     return this.http.delete(this.uri+ "/authenticate/deleterole?role="+role);
   }
+  deleteRoleUser(role: string, userId: string)
+  {
+    return this.http.delete(this.uri+ "/authenticate/deleteroleuser?userId="+userId+"&role="+role);
+  }
 
   new(registerModel : any)
   {
@@ -58,6 +62,8 @@ export class IdentityService {
       email: registerModel.email,
       password: registerModel.password,
       userRoles: registerModel.userRoles,
+      firstName: registerModel.firstName,
+      lastName: registerModel.lastName
     };
     return this.http.post(this.uri+ "/authenticate/register", newVM);
   }
