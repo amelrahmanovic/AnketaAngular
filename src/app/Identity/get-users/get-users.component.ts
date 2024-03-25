@@ -22,6 +22,8 @@ export class GetUsersComponent {
   users: IdentityUsers[] = [];
   showAdd: boolean = false;
 
+  selecteduserId = '';
+
   constructor(private toastr: ToastrService, private identityService: IdentityService) 
   {
       this.getData();
@@ -35,7 +37,7 @@ export class GetUsersComponent {
       (error) => {
         this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
       }
-   )
+    )
   }
   delete(userId: string)
   {

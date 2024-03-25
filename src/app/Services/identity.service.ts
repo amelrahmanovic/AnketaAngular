@@ -63,7 +63,8 @@ export class IdentityService {
       password: registerModel.password,
       userRoles: registerModel.userRoles,
       firstName: registerModel.firstName,
-      lastName: registerModel.lastName
+      lastName: registerModel.lastName,
+      id: registerModel.id
     };
     return this.http.post(this.uri+ "/authenticate/register", newVM);
   }
@@ -91,6 +92,10 @@ export class IdentityService {
   getUsers()
   {
     return this.http.get(this.uri+ "/authenticate/getusers");
+  }
+  getUserByUserId(userId: string)
+  {
+    return this.http.get(this.uri+ "/authenticate/getUserByUserId?userId="+userId);
   }
   deleteUser(userId: string)
   {

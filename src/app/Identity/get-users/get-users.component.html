@@ -28,7 +28,7 @@
         <td scope="row">{{x.firstName}} {{x.lastName}}</td>
         <td scope="row">{{x.userName}}</td>
         <td scope="row"> 
-          <span *ngFor="let role of x.roles">
+          <span *ngFor="let role of x.userRoles">
             <div>
               {{role}}
               <button class="btn btn-danger" (click)="deleteRole(x.id, role)"><i class="fa-solid fa-trash"></i></button>
@@ -43,7 +43,8 @@
         <td scope="row">{{x.lockoutEnabled}}</td>
         <td scope="row">{{x.lockoutEnd}}</td>
         <td>
-            <button class="btn btn-danger" (click)="delete(x.id)"><i class="fa-solid fa-trash"></i></button>
+            <button class="btn btn-danger" (click)="delete(x.id)"> <i class="fa-solid fa-trash"></i> </button>
+            <button class="btn btn-info margin-left-10px" (click)="showAdd=true; selecteduserId=x.id"> <i class="fa-solid fa-circle-plus"></i> Role</button>
         </td>
       </tr>
       <tr>
@@ -52,8 +53,8 @@
 </div>
 
 <div class="form-control margin-top-10px" *ngIf="showAdd">
-  <button class="btn btn-light" (click)="showAdd=false">
+  <button class="btn btn-light" (click)="showAdd=false; selecteduserId=''">
     <i class="fa-solid fa-circle-xmark"></i> User
   </button>
-  <app-add-user (sendData)="receiveData($event)"></app-add-user>
+  <app-add-user [userId]="selecteduserId" (sendData)="receiveData($event)"></app-add-user>
 </div>

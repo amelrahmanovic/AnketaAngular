@@ -11,5 +11,5 @@ export interface IdentityUsers {
     userName: string
     firstName: string
     lastName: string
-    roles: string[]
+    userRoles: string[]
   }

@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormlyFieldConfig, FormlyModule } from '@ngx-formly/core';
 import { AbstractControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { FormlyBootstrapModule } from '@ngx-formly/bootstrap';
@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { IndividualConfig, ToastrService } from 'ngx-toastr';
 import { IdentityService } from '../../../Services/identity.service';
 import { Role } from '../../../Models/Identity/Roles';
+import { User } from '../../../Models/User';
 
 @Component({
   selector: 'app-add-user',
@@ -20,7 +21,28 @@ export class AddUserComponent implements OnInit {
   customOptions = [
     { value: '', label: '' },
   ];
+  @Input() userId: string = "";
+  // user: User | undefined;
+
   ngOnInit() {
+    if(this.userId!=='')
+    {
+      this.identityService.getUserByUserId(this.userId).subscribe(
+        (data: any) => {
+          //this.user = data;
+          this.model=data;
+          // console.log(data);
+        },
+        (error) => {
+          this.toastr.error('Error:'+error.error, 'Error', this.toastOptions);
+        }
+      )
+    }
+    else
+    {
+      this.model = {};
+    }
+    
     this.identityService.getRoles().subscribe(
       (data: any) => {
         this.roles = data;
@@ -117,7 +139,7 @@ export class AddUserComponent implements OnInit {
       }
   
     ];
-    }, 80);
+    }, 160);
     
   }
   //username, email, password
@@ -131,7 +153,8 @@ export class AddUserComponent implements OnInit {
 };
 
   onSubmit() {
-    if (this.form.valid) {
+    if (this.form.valid) 
+    {
       this.identityService.new(this.model).subscribe({
       next: () => {
         this.toastr.success("New user registered successfully", "Success")
@@ -141,7 +164,7 @@ export class AddUserComponent implements OnInit {
         this.toastr.error("User already exists / register user failed", "Error", this.toastOptions)
       },
       complete: () => this.sendData.emit('getData')
-    });
+      });
     }
   }
   
